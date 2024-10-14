@@ -1,6 +1,7 @@
-﻿using DesafioFundamentos.Models;
+﻿using System.Runtime.InteropServices.Marshalling;
+using DesafioFundamentos.Models;
 
-// Coloca o encoding para UTF8 para exibir acentuação
+
 Console.OutputEncoding = System.Text.Encoding.UTF8;
 
 decimal precoInicial = 0;
@@ -13,13 +14,13 @@ precoInicial = Convert.ToDecimal(Console.ReadLine());
 Console.WriteLine("Agora digite o preço por hora:");
 precoPorHora = Convert.ToDecimal(Console.ReadLine());
 
-// Instancia a classe Estacionamento, já com os valores obtidos anteriormente
-Estacionamento es = new Estacionamento(precoInicial, precoPorHora);
+
+Estacionamento estacionamento = new Estacionamento(precoInicial, precoPorHora);
 
 string opcao = string.Empty;
 bool exibirMenu = true;
 
-// Realiza o loop do menu
+
 while (exibirMenu)
 {
     Console.Clear();
@@ -32,19 +33,41 @@ while (exibirMenu)
     switch (Console.ReadLine())
     {
         case "1":
-            es.AdicionarVeiculo();
+            estacionamento.AdicionarVeiculo();
             break;
 
         case "2":
-            es.RemoverVeiculo();
+            estacionamento.RemoverVeiculo();
             break;
 
         case "3":
-            es.ListarVeiculos();
+            estacionamento.ListarVeiculos();
             break;
 
         case "4":
-            exibirMenu = false;
+
+            Console.WriteLine("Pode haver veículos estacionados ainda, tem certeza?[S/N]");
+            string certeza = Console.ReadLine();
+            certeza = certeza.ToUpper();
+            while (true)
+            {
+                if (certeza == "S" ^ certeza == "SIM")
+                {
+                    exibirMenu = false;
+                    break;
+                }
+
+                else if (certeza == "N" ^ certeza == "NÃO")
+                {
+                    exibirMenu = true;
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine("Opção inválida");
+                    break;
+                }
+            }
             break;
 
         default:
